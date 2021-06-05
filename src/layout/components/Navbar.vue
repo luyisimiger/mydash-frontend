@@ -5,34 +5,31 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <el-menu class="el-menu-demo" mode="horizontal" :router="true">
+        <el-menu-item v-if="!isSignedIn" :route="{ name: 'login' }">
+          <el-link @click="onGoogleLogin">Login</el-link>
+        </el-menu-item>
+        <el-submenu v-else index="null">
+          <template slot="title">
+            <img :src="user.imageUrl" :title="user.fullName" class="user-avatar" height="60%">
+            &nbsp;
+            <b>{{ user.fullName }}</b>
+          </template>
+          <el-menu-item :route="{ name: 'Dashboard' }" index="home">
+            Home
+          </el-menu-item>
+          <el-menu-item index="logout" @click.native="logout">
+            Logout
+          </el-menu-item>
+        </el-submenu>
+      </el-menu>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
+import { getUserDataDefault } from '@/utils/gapi'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
@@ -41,19 +38,52 @@ export default {
     Breadcrumb,
     Hamburger
   },
+
+  data() {
+    return {
+    }
+  },
+
   computed: {
+    ...mapState('google', ['user']),
     ...mapGetters([
       'sidebar',
       'avatar'
-    ])
+    ]),
+    userName() {
+      return this.user.firstName
+    },
+
+    isSignedIn() {
+      return (this.user.expiresAt > Date.now())
+    }
   },
   methods: {
+    ...mapMutations('google', {
+      setUser: 'SET_USER'
+    }),
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    logout() {
+      this.google_logout()
+    },
+    onGoogleLogin() {
+      this.google_login()
+    },
+    google_login() {
+      const that = this
+      this.$gapi.login()
+        .then(({ currentUser, hasGrantedScopes }) => {
+          const user = that.$gapi.getUserData()
+          that.setUser(user)
+        })
+    },
+    google_logout() {
+      const that = this
+      this.$gapi.logout().then((data) => {
+        that.setUser(getUserDataDefault())
+      })
     }
   }
 }
