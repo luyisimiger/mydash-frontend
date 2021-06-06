@@ -58,7 +58,7 @@ export const constantRoutes = [
   },
 
   ...myroutes,
-
+/*
   {
     path: '/example',
     component: Layout,
@@ -152,7 +152,7 @@ export const constantRoutes = [
       }
     ]
   },
-
+*/
   {
     path: 'external-link',
     component: Layout,

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import moment from 'moment';
+import moment from 'moment'
 
 const formatDate = function(value, xformat) {
   if (!xformat) xformat = 'MM/DD/YYYY hh:mm'
@@ -8,4 +8,4 @@ const formatDate = function(value, xformat) {
   }
 }
 
-Vue.filter('formatDate', formatDate);
+Vue.filter('formatDate', formatDate)
