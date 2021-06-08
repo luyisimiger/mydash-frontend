@@ -13,21 +13,31 @@
         </div>
       </div>
     </el-col>
+    <el-col :lg="6">
+      <el-card shadow="hover">
+        La TRM para hoy
+        <el-button type="text" icon="el-icon-refresh" :loading="loadingTRM" @click="getTRM(Date.now())">
+          <span>$<count-to :start-val="0" :end-val="trm" :decimals="2" :duration="2000" /></span>
+        </el-button>
+      </el-card>
+    </el-col>
   </el-row>
 </template>
 
 <script>
 import CountTo from 'vue-count-to'
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     CountTo
   },
   computed: {
+    ...mapState('sfc', ['loadingTRM', 'trm']),
     ...mapGetters('google', ['gmailCount'])
   },
   methods: {
+    ...mapActions('sfc', ['getTRM']),
     handleClickGmail() {
       this.$router.push({ name: 'gmail' })
     }
