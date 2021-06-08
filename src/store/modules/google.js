@@ -15,7 +15,7 @@ const mutations = {
     state.user = user
 
     for (const f of state.gmail.filters) {
-      f.setUser(user)
+      f.update(user)
     }
   },
   SET_FILTERS: (state, filters) => {
@@ -46,8 +46,7 @@ const actions = {
 
     for (const f of gfilters) {
       const obj = new GmailFilter(f)
-      obj.setUser(context.state.user)
-      obj.fetch()
+      obj.update(context.state.user)
 
       filters.push(obj)
     }

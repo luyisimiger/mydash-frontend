@@ -20,6 +20,11 @@ export default class GmailFilter {
     return this.user.expiresAt < Date.now()
   }
 
+  update(user) {
+    this.setUser(user)
+    this.fetch()
+  }
+
   fetch() {
     const user = this.getUser()
     this.isfetching = true
