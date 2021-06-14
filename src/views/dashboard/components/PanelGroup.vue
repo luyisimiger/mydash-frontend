@@ -33,7 +33,10 @@ export default {
     CountTo
   },
   computed: {
-    ...mapState('sfc', ['loadingTRM', 'trm']),
+    ...mapState('sfc', {
+      loadingTRM: 'loadingTRM',
+      trm: state => Number(state.trm.valor)
+    }),
     ...mapGetters('google', ['gmailCount'])
   },
   methods: {

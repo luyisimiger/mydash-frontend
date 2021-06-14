@@ -2,12 +2,12 @@ import { queryTRM } from '@/services/sFc'
 
 const state = {
   loadingTRM: false,
-  trm: 0
+  trm: {}
 }
 
 const mutations = {
   SET_TRM: (state, trm) => {
-    state.trm = Number(trm)
+    state.trm = trm
   },
   SET_LOADING_TRM: (state, value) => {
     state.loadingTRM = value
@@ -25,7 +25,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       queryTRM(fecha)
         .then((response) => {
-          const trm = response.data[0].valor
+          const trm = response.data[0]
           context.commit('SET_TRM', trm)
           resolve(trm)
         })

@@ -25,6 +25,21 @@ const myroutes = [
         ]
       }
     ]
+  },
+  {
+    path: '/trm',
+    name: 'trm',
+    component: Layout,
+    redirect: '/trm/history',
+    meta: { title: 'TRM', icon: 'refresh' },
+    children: [
+      {
+        path: 'history',
+        name: 'trmHistory',
+        component: () => import('@/views/TRM'),
+        meta: { title: 'TRM HISTORY', icon: 'dollar' },
+      }
+    ]
   }
 ]
 
