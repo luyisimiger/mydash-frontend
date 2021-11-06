@@ -6,12 +6,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import CountTo from 'vue-count-to'
 import ECharts from 'vue-echarts'
-import echarts from 'echarts'
 import moment from 'moment'
-import numeral from 'numeral'
-import { queryTRMHistory } from "@/services/sFc"
+import { queryTRMHistory } from '@/services/sFc'
 
 const fnSortDates = (a, b) => {
   if (a.vigenciadesde < b.vigenciadesde) return -1
@@ -21,71 +18,13 @@ const fnSortDates = (a, b) => {
 
 export default {
   components: {
-    CountTo,
     ECharts
   },
   data() {
-    const $numeral = numeral()
-    const $formatDate = function (value) {
+    const $formatDate = function(value) {
       const m = moment(value)
-      return m.format("MMM D")
+      return m.format('MMM D')
     }
-    const source = [
-      {
-        "valor": "3626.02",
-        "unidad": "COP",
-        "vigenciadesde": "2021-06-12T00:00:00.000",
-        "vigenciahasta": "2021-06-15T00:00:00.000"
-      },
-      {
-        "valor": "3589.86",
-        "unidad": "COP",
-        "vigenciadesde": "2021-06-11T00:00:00.000",
-        "vigenciahasta": "2021-06-11T00:00:00.000"
-      },
-      {
-        "valor": "3588.41",
-        "unidad": "COP",
-        "vigenciadesde": "2021-06-10T00:00:00.000",
-        "vigenciahasta": "2021-06-10T00:00:00.000"
-      },
-      {
-        "valor": "3597.18",
-        "unidad": "COP",
-        "vigenciadesde": "2021-06-09T00:00:00.000",
-        "vigenciahasta": "2021-06-09T00:00:00.000"
-      },
-      {
-        "valor": "3609.2",
-        "unidad": "COP",
-        "vigenciadesde": "2021-06-05T00:00:00.000",
-        "vigenciahasta": "2021-06-08T00:00:00.000"
-      },
-      {
-        "valor": "3657.41",
-        "unidad": "COP",
-        "vigenciadesde": "2021-06-04T00:00:00.000",
-        "vigenciahasta": "2021-06-04T00:00:00.000"
-      },
-      {
-        "valor": "3642.29",
-        "unidad": "COP",
-        "vigenciadesde": "2021-06-03T00:00:00.000",
-        "vigenciahasta": "2021-06-03T00:00:00.000"
-      },
-      {
-        "valor": "3671.38",
-        "unidad": "COP",
-        "vigenciadesde": "2021-06-02T00:00:00.000",
-        "vigenciahasta": "2021-06-02T00:00:00.000"
-      },
-      {
-        "valor": "3715.28",
-        "unidad": "COP",
-        "vigenciadesde": "2021-05-29T00:00:00.000",
-        "vigenciahasta": "2021-06-01T00:00:00.000"
-      }
-    ]
     return {
       chartOption: {
         title: {
@@ -94,7 +33,7 @@ export default {
           left: '1%'
         },
         tooltip: {
-          trigger: 'axis',
+          trigger: 'axis'
         },
         legend: {
           top: 20,
@@ -134,7 +73,7 @@ export default {
           axisPointer: {
             show: true,
             label: {
-              formatter: (params) => moment(params.value).format("D MMM YYYY")
+              formatter: (params) => moment(params.value).format('D MMM YYYY')
             }
           },
           splitLine: {
@@ -181,7 +120,7 @@ export default {
           encode: {
             x: 'vigenciahasta',
             y: 'valor'
-          },
+          }
           /*
           tooltip: {
             backgroundColor: 'rgba(50,50,50,0.7)',
@@ -211,9 +150,6 @@ export default {
     fechafin() {
       return this.trm.vigenciahasta
     }
-  },
-
-  methods: {
   },
   mounted() {
     // const fecha = moment(this.trm.vigenciahasta)

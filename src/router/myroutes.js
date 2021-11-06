@@ -37,7 +37,7 @@ const myroutes = [
         path: 'history',
         name: 'trmHistory',
         component: () => import('@/views/TRM'),
-        meta: { title: 'TRM HISTORY', icon: 'dollar' },
+        meta: { title: 'TRM HISTORY', icon: 'dollar' }
       }
     ]
   }
