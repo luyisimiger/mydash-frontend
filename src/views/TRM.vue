@@ -6,6 +6,8 @@
 
 <script>
 import { mapState } from 'vuex'
+// eslint-disable-next-line
+import echarts from 'echarts'
 import ECharts from 'vue-echarts'
 import moment from 'moment'
 import { queryTRMHistory } from '@/services/sFc'
