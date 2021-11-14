@@ -40,6 +40,21 @@ const myroutes = [
         meta: { title: 'TRM HISTORY', icon: 'dollar' }
       }
     ]
+  },
+  {
+    path: '/binance',
+    name: 'binance',
+    component: Layout,
+    redirect: '/binance/spot',
+    meta: { title: 'TRM', icon: 'refresh' },
+    children: [
+      {
+        path: 'spot',
+        name: 'binanceSpot',
+        component: () => import('@/views/binance/spot.vue'),
+        meta: { title: 'Binance Spot' }
+      }
+    ]
   }
 ]
 
